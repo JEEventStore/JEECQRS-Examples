@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Place order</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <h:messages/>
+            <h:panelGroup rendered="#{orderAction.hasProducts()}">
+                Name: <h:inputText value="#{orderAction.data.orderer}" required="true"/><br/>
+                Available products:
+                <h:dataTable value="#{orderAction.data.list}" var="o"
+                             rendered="#{orderAction.hasProducts()}"
+                             border="1" >
+                    <h:column>
+                        <f:facet name="header">ID</f:facet>
+                            #{o.product.productId}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Name</f:facet>
+                            #{o.product.name}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Price</f:facet>
+                            $#{o.product.price}
+                    </h:column>
+                    <h:column>
+                        <h:selectBooleanCheckbox value="#{o.selected}"/>
+                    </h:column>
+                </h:dataTable>
+                <h:commandButton value="place order!" action="#{orderAction.placeOrder}"/>
+            </h:panelGroup>
+            <h:panelGroup rendered="#{not orderAction.hasProducts()}">
+                No products available, please <a href="loadfixtures.jsf">load some sample data</a>.
+            </h:panelGroup>
+        </h:form>
+    </h:body>
+</html>
+

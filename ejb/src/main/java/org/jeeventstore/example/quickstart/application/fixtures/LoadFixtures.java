@@ -1,0 +1,27 @@
+package org.jeeventstore.example.quickstart.application.fixtures;
+
+import java.math.BigDecimal;
+import java.util.UUID;
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
+import org.jeeventstore.example.quickstart.domain.model.product.Product;
+import org.jeeventstore.example.quickstart.domain.model.product.ProductId;
+import org.jeeventstore.example.quickstart.domain.model.product.ProductRepository;
+
+@Stateless
+public class LoadFixtures {
+
+    @EJB
+    private ProductRepository productRepository;
+
+    public void load() {
+
+        for (int i = 100; i < 120; i++)
+            productRepository.add(
+                    new Product(new ProductId(i), "Product " + i,
+                            "Description of product " + i, new BigDecimal(i)),
+                    UUID.randomUUID().toString());
+
+    }
+    
+}

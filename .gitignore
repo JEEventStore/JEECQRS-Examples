@@ -1,0 +1,11 @@
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+nb-configuration.xml
+./ejb/target
+./ear/target
+./web/target
