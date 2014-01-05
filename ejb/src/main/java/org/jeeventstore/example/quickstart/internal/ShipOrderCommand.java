@@ -1,29 +1,18 @@
-package org.jeeventstore.example.quickstart.application.order;
+package org.jeeventstore.example.quickstart.internal;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 import org.jeecqrs.common.commands.AbstractCommand;
+import org.jeeventstore.example.quickstart.domain.model.order.OrderId;
 
-/**
- *
- */
-public class PlaceOrderCommand extends AbstractCommand<PlaceOrderCommand> {
+public final class ShipOrderCommand extends AbstractCommand<ShipOrderCommand> {
 
-    private final String ordererName;
-    private final Map<String, Integer> orderedProducts;
+    private final OrderId orderId;
 
-    public PlaceOrderCommand(String ordererName, Map<String, Integer> orderedProducts) {
-        this.ordererName = ordererName;
-        this.orderedProducts = new HashMap<>(orderedProducts);
+    public ShipOrderCommand(OrderId orderId) {
+        this.orderId = orderId;
     }
 
-    public String ordererName() {
-        return ordererName;
+    public OrderId orderId() {
+        return this.orderId;
     }
 
-    public Map<String, Integer> orderedProducts() {
-        return Collections.unmodifiableMap(orderedProducts);
-    }
-    
 }

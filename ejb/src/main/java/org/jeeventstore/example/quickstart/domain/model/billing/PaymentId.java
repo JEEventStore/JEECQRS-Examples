@@ -1,10 +1,11 @@
-package org.jeeventstore.example.quickstart.domain.model.order;
+package org.jeeventstore.example.quickstart.domain.model.billing;
 
 import org.jeecqrs.common.AbstractId;
+import org.jeeventstore.example.quickstart.domain.model.order.Order;
 
 /**
- * Uniquely identifies an order.
+ * Uniquely identifies a payment.
  */
-public final class OrderId extends AbstractId<OrderId> {
+public final class PaymentId extends AbstractId<PaymentId> {
 
 }

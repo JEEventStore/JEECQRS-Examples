@@ -1,25 +1,26 @@
-package org.jeeventstore.example.quickstart.application.internal.customers;
+package org.jeeventstore.example.quickstart.internal;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import org.jeecqrs.command.CommandHandler;
+import org.jeecqrs.integration.jcommondomain.commands.AbstractCommandHandler;
+import org.jeeventstore.example.quickstart.domain.model.order.Order;
+import org.jeeventstore.example.quickstart.domain.model.order.OrderRepository;
 
-/**
- *
- */
 @Stateless
-public class NotifyCustomerCommandHandler implements CommandHandler<NotifyCustomerCommand> {
+public class NotifyCustomerCommandHandler extends AbstractCommandHandler<NotifyCustomerCommand> {
 
-    private Logger log = Logger.getAnonymousLogger();
+    private static final Logger log = Logger.getLogger(NotifyCustomerCommandHandler.class.getSimpleName());
+
+    @EJB
+    private OrderRepository orderRepository;
 
     @Override
     public void handleCommand(NotifyCustomerCommand command) {
-        log.info("Sending out notification to customer '" + command.customer() + "': " + command.message());
+        Order order = orderRepository.ofIdentity(command.orderId());
+        log.log(Level.INFO, "Sending out notification to customer ''{0}'': {1}",
+                new Object[]{ order.orderer().name(), command.message()});
     }
 
-    @Override
-    public Class<? extends NotifyCustomerCommand> handledCommandType() {
-        return NotifyCustomerCommand.class;
-    }
-    
 }

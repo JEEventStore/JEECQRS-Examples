@@ -1,25 +1,19 @@
-package org.jeeventstore.example.quickstart.application.order;
+package org.jeeventstore.example.quickstart.internal;
 
-import java.util.Date;
-import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import org.jeecqrs.command.CommandHandler;
+import org.jeecqrs.integration.jcommondomain.commands.AbstractCommandHandler;
 import org.jeeventstore.example.quickstart.domain.model.order.Order;
 import org.jeeventstore.example.quickstart.domain.model.order.OrderId;
 import org.jeeventstore.example.quickstart.domain.model.order.OrderRepository;
-import org.jeeventstore.example.quickstart.domain.model.product.Product;
-import org.jeeventstore.example.quickstart.domain.model.product.ProductId;
 import org.jeeventstore.example.quickstart.domain.model.product.ProductRepository;
 
-/**
- *
- */
 @Stateless
-public class PlaceOrderCommandHandler implements CommandHandler<PlaceOrderCommand> {
+public class ShipOrderCommandHandler extends AbstractCommandHandler<ShipOrderCommand> {
 
-    private Logger log = Logger.getAnonymousLogger();
+    private static final Logger log = Logger.getLogger(ShipOrderCommandHandler.class.getSimpleName());
 
     @EJB
     private OrderRepository orderRepository;
@@ -28,24 +22,12 @@ public class PlaceOrderCommandHandler implements CommandHandler<PlaceOrderComman
     private ProductRepository productRepository;
 
     @Override
-    public void handleCommand(PlaceOrderCommand command) {
-        log.info("Received PlaceOrderCommand");
-        Order order = new Order(new OrderId(), new Date(), command.ordererName());
-        for (Map.Entry<String, Integer> entry : command.orderedProducts().entrySet()) {
-            ProductId productId = ProductId.fromString(entry.getKey());
-            log.info("Lade Product: " + productId);
-            Product product = productRepository.productOfIdentity(productId);
-            log.info("Product gefunden: " + product);
-            order.addOrderLine(product, entry.getValue());
-        }
-        log.info("Adding new order to repository");
-        orderRepository.add(order, command.id().idString());
-        log.info("command handled");
+    public void handleCommand(ShipOrderCommand command) {
+        OrderId orderId = command.orderId();
+        log.log(Level.INFO, "Shipping order #{0}", command.orderId());
+        Order order = orderRepository.ofIdentity(orderId);
+        order.ship();
+        orderRepository.save(order, command.id());
     }
 
-    @Override
-    public Class<? extends PlaceOrderCommand> handledCommandType() {
-        return PlaceOrderCommand.class;
-    }
-    
 }

@@ -16,7 +16,7 @@ import javax.inject.Named;
 import org.jeecqrs.common.commands.CommandBus;
 import org.jeeventstore.example.quickstart.application.order.PlaceOrderCommand;
 import org.jeeventstore.example.quickstart.application.product.ProductList;
-import org.jeeventstore.example.quickstart.projections.products.ProductListEntry;
+import org.jeeventstore.example.quickstart.application.product.ProductListEntry;
 
 @RequestScoped
 @Named

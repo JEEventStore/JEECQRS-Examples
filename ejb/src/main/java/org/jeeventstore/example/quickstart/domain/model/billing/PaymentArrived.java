@@ -1,33 +1,33 @@
-package org.jeeventstore.example.quickstart.domain.model.order;
+package org.jeeventstore.example.quickstart.domain.model.billing;
 
 import java.util.Date;
 import org.jeecqrs.common.domain.model.AbstractDomainEvent;
 
 /**
- * A new order has been placed.
+ * A payment for an invoice has arrived.
  */
-public final class OrderPlaced extends AbstractDomainEvent<OrderPlaced> {
+public final class PaymentArrived extends AbstractDomainEvent<PaymentArrived> {
 
-    private final OrderId orderId;
-    private final Date orderDate;
-    private final Orderer orderer;
+    private final PaymentId paymentId;
+    private final InvoiceId invoiceId;
+    private final Date payedAt;
 
-    public OrderPlaced(OrderId orderId, Date orderDate, Orderer orderer) {
-        this.orderId = orderId;
-        this.orderDate = orderDate;
-        this.orderer = orderer;
+    public PaymentArrived(PaymentId paymentId, InvoiceId invoiceId, Date payedAt) {
+        this.paymentId = paymentId;
+        this.invoiceId = invoiceId;
+        this.payedAt = payedAt;
     }
 
-    public OrderId orderId() {
-        return orderId;
+    public PaymentId paymentId() {
+        return paymentId;
     }
 
-    public Date orderDate() {
-        return orderDate;
+    public InvoiceId invoiceId() {
+        return invoiceId;
     }
 
-    public Orderer orderer() {
-        return orderer;
+    public Date payedAt() {
+        return payedAt;
     }
-    
+
 }

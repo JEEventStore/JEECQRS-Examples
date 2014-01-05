@@ -6,28 +6,22 @@ import org.jeecqrs.common.domain.model.AbstractDomainEvent;
 /**
  * A new order has been placed.
  */
-public final class OrderPlaced extends AbstractDomainEvent<OrderPlaced> {
+public final class OrderShipped extends AbstractDomainEvent<OrderShipped> {
 
     private final OrderId orderId;
-    private final Date orderDate;
-    private final Orderer orderer;
+    private final Date shippingDate;
 
-    public OrderPlaced(OrderId orderId, Date orderDate, Orderer orderer) {
+    public OrderShipped(OrderId orderId, Date shippingDate) {
         this.orderId = orderId;
-        this.orderDate = orderDate;
-        this.orderer = orderer;
+        this.shippingDate = shippingDate;
     }
 
     public OrderId orderId() {
         return orderId;
     }
 
-    public Date orderDate() {
-        return orderDate;
-    }
-
-    public Orderer orderer() {
-        return orderer;
+    public Date shippingDate() {
+        return shippingDate;
     }
     
 }

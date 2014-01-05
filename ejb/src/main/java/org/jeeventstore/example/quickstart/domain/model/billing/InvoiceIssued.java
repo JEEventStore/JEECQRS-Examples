@@ -1,33 +1,54 @@
-package org.jeeventstore.example.quickstart.domain.model.order;
+package org.jeeventstore.example.quickstart.domain.model.billing;
 
-import java.util.Date;
+import java.math.BigDecimal;
+import org.jeeventstore.example.quickstart.domain.model.order.*;
 import org.jeecqrs.common.domain.model.AbstractDomainEvent;
+import org.joda.time.LocalDate;
 
 /**
- * A new order has been placed.
+ * A new invoice has been issued.
  */
-public final class OrderPlaced extends AbstractDomainEvent<OrderPlaced> {
+public final class InvoiceIssued extends AbstractDomainEvent<InvoiceIssued> {
 
+    private final InvoiceId invoiceId;
+    private final LocalDate invoiceDate;
     private final OrderId orderId;
-    private final Date orderDate;
-    private final Orderer orderer;
+    private final String buyer;
+    private final String text;
+    private final BigDecimal totals;
 
-    public OrderPlaced(OrderId orderId, Date orderDate, Orderer orderer) {
+    public InvoiceIssued(InvoiceId invoiceId, LocalDate invoiceDate,
+            OrderId orderId, String buyer, String text, BigDecimal totals) {
+        this.invoiceId = invoiceId;
+        this.invoiceDate = invoiceDate;
         this.orderId = orderId;
-        this.orderDate = orderDate;
-        this.orderer = orderer;
+        this.buyer = buyer;
+        this.text = text;
+        this.totals = totals;
+    }
+
+    public InvoiceId invoiceId() {
+        return invoiceId;
+    }
+
+    public LocalDate invoiceDate() {
+        return invoiceDate;
     }
 
     public OrderId orderId() {
         return orderId;
     }
 
-    public Date orderDate() {
-        return orderDate;
+    public String buyer() {
+        return buyer;
     }
 
-    public Orderer orderer() {
-        return orderer;
+    public String text() {
+        return text;
     }
-    
+
+    public BigDecimal totals() {
+        return totals;
+    }
+
 }

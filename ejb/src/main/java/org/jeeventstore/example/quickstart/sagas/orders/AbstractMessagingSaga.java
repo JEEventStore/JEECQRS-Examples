@@ -1,47 +1,17 @@
 package org.jeeventstore.example.quickstart.sagas.orders;
 
-import org.jeecqrs.bundle.jcommondomain.sagas.AbstractSaga;
-import org.jeecqrs.common.Identity;
-import org.jeeventstore.example.quickstart.application.internal.customers.NotifyCustomerCommand;
+import org.jeecqrs.common.event.Event;
+import org.jeecqrs.integration.jcommondomain.sagas.AbstractSingleEventSaga;
+import org.jeecqrs.sagas.Saga;
 import org.jeeventstore.example.quickstart.domain.model.order.OrderId;
-import org.jeeventstore.example.quickstart.domain.model.order.OrderPlaced;
+import org.jeeventstore.example.quickstart.internal.NotifyCustomerCommand;
 
-/**
- *
- * - Order received
- * - invoice -> paid
- * - dann shipping
- * 
- * CustomerOrderPaid
- * 
- */
-public class OrderTrackingSaga extends AbstractSaga {
+public abstract class AbstractMessagingSaga<S extends Saga<Event>, F extends Event>
+        extends AbstractSingleEventSaga<S, F> {
 
-    private OrderId orderId = null;
-    private String orderer = null;
-    private boolean completed = false;
-    private boolean canceled = false;
-
-    @Override
-    public Identity id() {
-        return this.orderId;
-    }
-
-    protected void when(OrderPlaced event) {
-        System.out.println("Received order placed event: " + event.orderer());
-        this.orderId = event.orderId();
-        this.orderer = event.orderer().name();
-        this.sendCustomerMessage("Thank you for your order!");
-    }
-
-    private void sendCustomerMessage(String msg) {
-        NotifyCustomerCommand cmd = new NotifyCustomerCommand(orderer, msg);
+    protected void sendCustomerMessage(OrderId orderId, String msg) {
+        NotifyCustomerCommand cmd = new NotifyCustomerCommand(orderId, msg);
         this.executeCommand(cmd);
     }
 
-    @Override
-    public boolean isCompleted() {
-        return this.completed;
-    }
-    
 }

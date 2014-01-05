@@ -5,10 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import org.jeecqrs.common.commands.AbstractCommand;
 
-/**
- *
- */
-public class PlaceOrderCommand extends AbstractCommand<PlaceOrderCommand> {
+public final class PlaceOrderCommand extends AbstractCommand<PlaceOrderCommand> {
 
     private final String ordererName;
     private final Map<String, Integer> orderedProducts;

@@ -1,51 +1,25 @@
-package org.jeeventstore.example.quickstart.application.order;
+package org.jeeventstore.example.quickstart.application.billing;
 
 import java.util.Date;
-import java.util.Map;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import org.jeecqrs.command.CommandHandler;
-import org.jeeventstore.example.quickstart.domain.model.order.Order;
-import org.jeeventstore.example.quickstart.domain.model.order.OrderId;
-import org.jeeventstore.example.quickstart.domain.model.order.OrderRepository;
-import org.jeeventstore.example.quickstart.domain.model.product.Product;
-import org.jeeventstore.example.quickstart.domain.model.product.ProductId;
-import org.jeeventstore.example.quickstart.domain.model.product.ProductRepository;
+import org.jeecqrs.integration.jcommondomain.commands.AbstractCommandHandler;
+import org.jeeventstore.example.quickstart.domain.model.billing.InvoiceId;
+import org.jeeventstore.example.quickstart.domain.model.billing.Payment;
+import org.jeeventstore.example.quickstart.domain.model.billing.PaymentId;
+import org.jeeventstore.example.quickstart.domain.model.billing.PaymentRepository;
 
-/**
- *
- */
 @Stateless
-public class PlaceOrderCommandHandler implements CommandHandler<PlaceOrderCommand> {
-
-    private Logger log = Logger.getAnonymousLogger();
+public class PayInvoiceCommandHandler extends AbstractCommandHandler<PayInvoiceCommand> {
 
     @EJB
-    private OrderRepository orderRepository;
-
-    @EJB
-    private ProductRepository productRepository;
+    private PaymentRepository paymentRepository;
 
     @Override
-    public void handleCommand(PlaceOrderCommand command) {
-        log.info("Received PlaceOrderCommand");
-        Order order = new Order(new OrderId(), new Date(), command.ordererName());
-        for (Map.Entry<String, Integer> entry : command.orderedProducts().entrySet()) {
-            ProductId productId = ProductId.fromString(entry.getKey());
-            log.info("Lade Product: " + productId);
-            Product product = productRepository.productOfIdentity(productId);
-            log.info("Product gefunden: " + product);
-            order.addOrderLine(product, entry.getValue());
-        }
-        log.info("Adding new order to repository");
-        orderRepository.add(order, command.id().idString());
-        log.info("command handled");
+    public void handleCommand(PayInvoiceCommand command) {
+        InvoiceId invoiceId = InvoiceId.fromString(command.invoiceId());
+        Payment payment = new Payment(new PaymentId(), invoiceId, new Date());
+        paymentRepository.add(payment, command.id());
     }
 
-    @Override
-    public Class<? extends PlaceOrderCommand> handledCommandType() {
-        return PlaceOrderCommand.class;
-    }
-    
 }

@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.UUID;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import org.jeecqrs.common.AbstractId;
 import org.jeeventstore.example.quickstart.domain.model.product.Product;
 import org.jeeventstore.example.quickstart.domain.model.product.ProductId;
 import org.jeeventstore.example.quickstart.domain.model.product.ProductRepository;
@@ -20,8 +21,7 @@ public class LoadFixtures {
             productRepository.add(
                     new Product(new ProductId(i), "Product " + i,
                             "Description of product " + i, new BigDecimal(i)),
-                    UUID.randomUUID().toString());
-
+                    new AbstractId(UUID.randomUUID().toString()) {});
     }
     
 }

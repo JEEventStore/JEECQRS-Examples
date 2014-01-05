@@ -1,7 +1,7 @@
 package org.jeeventstore.example.quickstart.web;
 
 import java.io.Serializable;
-import org.jeeventstore.example.quickstart.projections.products.ProductListEntry;
+import org.jeeventstore.example.quickstart.application.product.ProductListEntry;
 
 public class OrderDataModel implements Serializable {
 

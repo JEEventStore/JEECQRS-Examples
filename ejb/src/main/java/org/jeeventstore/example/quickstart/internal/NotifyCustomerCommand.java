@@ -1,22 +1,20 @@
-package org.jeeventstore.example.quickstart.application.internal.customers;
+package org.jeeventstore.example.quickstart.internal;
 
 import org.jeecqrs.common.commands.AbstractCommand;
+import org.jeeventstore.example.quickstart.domain.model.order.OrderId;
 
-/**
- *
- */
-public class NotifyCustomerCommand extends AbstractCommand<NotifyCustomerCommand> {
+public final class NotifyCustomerCommand extends AbstractCommand<NotifyCustomerCommand> {
 
-    private final String customer;
+    private final OrderId orderId;
     private final String message;
 
-    public NotifyCustomerCommand(String customer, String message) {
-        this.customer = customer;
+    public NotifyCustomerCommand(OrderId orderId, String message) {
+        this.orderId = orderId;
         this.message = message;
     }
 
-    public String customer() {
-        return customer;
+    public OrderId orderId() {
+        return orderId;
     }
 
     public String message() {

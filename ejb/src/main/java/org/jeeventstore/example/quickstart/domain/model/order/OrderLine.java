@@ -8,7 +8,7 @@ import org.jeeventstore.example.quickstart.domain.model.product.ProductId;
 /**
  * A line within an order.
  */
-public final class OrderLine extends AbstractEntity<OrderLine> {
+public final class OrderLine extends AbstractEntity<OrderLine, OrderLineId> {
 
     private final OrderLineId lineId;
     private final ProductId productId;

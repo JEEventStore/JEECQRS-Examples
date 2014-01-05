@@ -7,4 +7,14 @@ import org.jeecqrs.common.AbstractId;
  */
 public final class OrderId extends AbstractId<OrderId> {
 
+    public OrderId() { }
+
+    private OrderId(String orderId) {
+        super(orderId);
+    }
+
+    public static OrderId fromString(String orderId) {
+        return new OrderId(orderId);
+    }
+
 }

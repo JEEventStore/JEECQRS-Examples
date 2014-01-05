@@ -12,8 +12,8 @@ public final class OrderLineId extends AbstractId<OrderLineId> {
         super(productId);
     }
 
-    public static OrderLineId forProduct(Product product) {
-        return new OrderLineId(product.id().idString());
+    protected static OrderLineId forProduct(Product product) {
+        return new OrderLineId(product.id().toString());
     }
 
 }

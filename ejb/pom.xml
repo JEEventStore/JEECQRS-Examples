@@ -4,7 +4,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.jeecqrs.examples</groupId>
+        <groupId>org.jeecqrs</groupId>
         <artifactId>jeecqrs-quickstart-sample-parent</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
@@ -21,20 +21,42 @@
     <dependencies>
         
         <dependency>
-            <groupId>org.jeecqrs.bundle</groupId>
-            <artifactId>jeecqrs-quickstart-bundle</artifactId>
+            <groupId>org.jeecqrs</groupId>
+            <artifactId>jcommondomain-core</artifactId>
         </dependency>
 
         <dependency>
             <groupId>org.jeecqrs</groupId>
-            <artifactId>jcommondomain-core</artifactId>
-            <scope>provided</scope>
+            <artifactId>jeecqrs-jcommondomain-core</artifactId>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.jeecqrs</groupId>
+            <artifactId>jeecqrs-jcommondomain-persistence-jeeventstore</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.3</version>
+        </dependency>
+            
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.2.4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jeeventstore</groupId>
+            <artifactId>jeeventstore-serialization-gson</artifactId>
+            <version>${version.jeeventstore}</version>
         </dependency>
 
         <dependency>

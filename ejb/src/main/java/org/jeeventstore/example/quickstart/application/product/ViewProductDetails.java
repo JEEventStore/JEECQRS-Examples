@@ -12,9 +12,11 @@ public class ViewProductDetails {
     @EJB
     private ProductRepository productRepository;
 
-    public Product viewProduct(String productId) {
+    public ProductDetails viewProduct(String productId) {
         ProductId pid = ProductId.fromString(productId);
-        return productRepository.productOfIdentity(pid);
+        Product p = productRepository.ofIdentity(pid);
+        ProductDetails details = new ProductDetails(productId, p.name(), p.description(), p.price());
+        return details;
     }
     
 }

@@ -4,7 +4,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.jeecqrs.examples</groupId>
+        <groupId>org.jeecqrs</groupId>
         <artifactId>jeecqrs-quickstart-sample-parent</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
@@ -34,7 +34,7 @@
                     </archive>
                     <modules>
                         <webModule>
-                            <groupId>org.jeecqrs.examples</groupId>
+                            <groupId>org.jeecqrs</groupId>
                             <artifactId>jeecqrs-quickstart-sample-web</artifactId>
                             <contextRoot>/jeecqrs-quickstart-sample</contextRoot>
                         </webModule>
@@ -56,20 +56,20 @@
     <dependencies>
 
         <dependency>
-            <groupId>org.jeecqrs.examples</groupId>
+            <groupId>org.jeecqrs</groupId>
             <artifactId>jeecqrs-quickstart-sample-ejb</artifactId>
             <type>ejb</type>
         </dependency>
 
         <dependency>
-            <groupId>org.jeecqrs.examples</groupId>
+            <groupId>org.jeecqrs</groupId>
             <artifactId>jeecqrs-quickstart-sample-web</artifactId>
             <type>war</type>
         </dependency>
 
         <dependency>
-            <groupId>org.jeecqrs.bundle</groupId>
-            <artifactId>jeecqrs-quickstart-bundle-ejb</artifactId>
+            <groupId>org.jeecqrs</groupId>
+            <artifactId>jeecqrs-jcommondomain-persistence-jeeventstore-ejb</artifactId>
             <type>ejb</type>
         </dependency>
 

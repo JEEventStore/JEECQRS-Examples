@@ -4,10 +4,7 @@ import java.math.BigDecimal;
 import org.apache.commons.lang3.Validate;
 import org.jeecqrs.common.domain.model.AbstractEventSourcedAggregateRoot;
 
-/**
- *
- */
-public class Product extends AbstractEventSourcedAggregateRoot<Product> {
+public class Product extends AbstractEventSourcedAggregateRoot<Product, ProductId> {
 
     private ProductId productId;
     private String name;
@@ -39,10 +36,6 @@ public class Product extends AbstractEventSourcedAggregateRoot<Product> {
         return price;
     }
 
-    public void changePrice(BigDecimal newPrice) {
-        this.apply(new ProductPriceChanged(productId, newPrice));
-    }
-
     protected void when(ProductListed event) {
         this.productId = event.productId();
         this.name = event.name();
@@ -50,16 +43,7 @@ public class Product extends AbstractEventSourcedAggregateRoot<Product> {
         this.price = event.price();
     }
 
-    protected void when (ProductPriceChanged event) {
-        this.price = event.newPrice();
-    }
-
     // required for repository
     private Product() { }
 
-    @Override
-    public String toString() {
-        return "{Product version=" + this.theversion() + "}";
-    }
-    
 }

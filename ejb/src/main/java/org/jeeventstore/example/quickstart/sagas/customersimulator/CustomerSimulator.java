@@ -1,7 +1,7 @@
 package org.jeeventstore.example.quickstart.sagas.customersimulator;
 
 import java.util.logging.Logger;
-import org.jeecqrs.bundle.jcommondomain.sagas.AbstractSingleEventSaga;
+import org.jeecqrs.integration.jcommondomain.sagas.AbstractSingleEventSaga;
 import org.jeeventstore.example.quickstart.application.billing.PayInvoiceCommand;
 import org.jeeventstore.example.quickstart.domain.model.billing.InvoiceIssued;
 

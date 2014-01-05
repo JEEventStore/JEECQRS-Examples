@@ -1,47 +1,83 @@
-package org.jeeventstore.example.quickstart.sagas.orders;
+package org.jeeventstore.example.quickstart.sagas.billing;
 
-import org.jeecqrs.bundle.jcommondomain.sagas.AbstractSaga;
-import org.jeecqrs.common.Identity;
-import org.jeeventstore.example.quickstart.application.internal.customers.NotifyCustomerCommand;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.jeecqrs.integration.jcommondomain.sagas.AbstractSaga;
+import org.jeecqrs.integration.jcommondomain.sagas.SagaIdentifier;
+import org.jeeventstore.example.quickstart.application.order.CancelOrderCommand;
+import org.jeeventstore.example.quickstart.domain.model.billing.InvoiceId;
+import org.jeeventstore.example.quickstart.domain.model.billing.InvoiceIssued;
+import org.jeeventstore.example.quickstart.domain.model.billing.PaymentArrived;
 import org.jeeventstore.example.quickstart.domain.model.order.OrderId;
-import org.jeeventstore.example.quickstart.domain.model.order.OrderPlaced;
 
 /**
- *
- * - Order received
- * - invoice -> paid
- * - dann shipping
- * 
- * CustomerOrderPaid
- * 
+ * Tracks invoices and cancels any orders that have not been payed
+ * within the time frame.
  */
-public class OrderTrackingSaga extends AbstractSaga {
+public class InvoiceTrackingSaga extends AbstractSaga<InvoiceTrackingSaga> {
 
+    private static final Logger log = Logger.getLogger(InvoiceTrackingSaga.class.getSimpleName());
+
+    private InvoiceId invoiceId = null;
     private OrderId orderId = null;
-    private String orderer = null;
-    private boolean completed = false;
-    private boolean canceled = false;
+    private boolean completed = false; 
 
     @Override
-    public Identity id() {
-        return this.orderId;
+    protected void setupSaga() {
+        listenTo(new SagaIdentifier<InvoiceIssued>() {
+            @Override
+            public String sagaIdFor(InvoiceIssued event) {
+                return event.invoiceId().toString();
+            }
+        });
+        listenTo(new SagaIdentifier<PaymentArrived>() {
+            @Override
+            public String sagaIdFor(PaymentArrived event) {
+                return event.invoiceId().toString();
+            }
+        });
+        listenTo(new SagaIdentifier<PaymentTimedOut>() {
+            @Override
+            public String sagaIdFor(PaymentTimedOut event) {
+                return event.invoiceId().toString();
+            }
+        });
     }
 
-    protected void when(OrderPlaced event) {
-        System.out.println("Received order placed event: " + event.orderer());
+    protected void when(InvoiceIssued event) {
+        if (!eventSourceReplayActive())
+            log.log(Level.INFO, "Received invoice issued event: {0}", event.invoiceId());
+        this.invoiceId = event.invoiceId();
         this.orderId = event.orderId();
-        this.orderer = event.orderer().name();
-        this.sendCustomerMessage("Thank you for your order!");
+        if (!completed)
+            // schedule timeout in 30 seconds
+            this.raiseEvent(new PaymentTimedOut(invoiceId), 30000);
     }
 
-    private void sendCustomerMessage(String msg) {
-        NotifyCustomerCommand cmd = new NotifyCustomerCommand(orderer, msg);
-        this.executeCommand(cmd);
+    protected void when(PaymentArrived event) {
+        if (!eventSourceReplayActive())
+            log.log(Level.INFO, "Received payment arrived event #{0} for invoice #{1}",
+                    new Object[]{ event.id(), event.invoiceId() });
+        this.invoiceId = event.invoiceId();
+        completed = true;
+    }
+
+    protected void when(PaymentTimedOut event) {
+        if (!eventSourceReplayActive())
+            log.log(Level.INFO, "Received payment timed out event #{0} for invoice #{1}",
+                    new Object[]{ event.id(), event.invoiceId() });
+        if (!isCompleted()) {
+            if (!eventSourceReplayActive())
+                log.log(Level.INFO, "Customer did not pay, cancel order {0}",
+                        new Object[]{ orderId });
+            executeCommand(new CancelOrderCommand(orderId.toString(),
+                    "Customer did not pay within time"));
+        } 
     }
 
     @Override
     public boolean isCompleted() {
-        return this.completed;
+        return completed;
     }
-    
+
 }
