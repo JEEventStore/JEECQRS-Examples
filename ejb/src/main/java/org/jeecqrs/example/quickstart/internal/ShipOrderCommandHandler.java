@@ -22,7 +22,7 @@ public class ShipOrderCommandHandler extends AbstractCommandHandler<ShipOrderCom
     private ProductRepository productRepository;
 
     @Override
-    public void handleCommand(ShipOrderCommand command) {
+    public void handle(ShipOrderCommand command) {
         OrderId orderId = command.orderId();
         log.log(Level.INFO, "Shipping order #{0}", command.orderId());
         Order order = orderRepository.ofIdentity(orderId);

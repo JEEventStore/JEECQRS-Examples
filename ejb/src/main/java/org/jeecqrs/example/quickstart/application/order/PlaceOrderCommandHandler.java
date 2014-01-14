@@ -21,7 +21,7 @@ public class PlaceOrderCommandHandler extends AbstractCommandHandler<PlaceOrderC
     private OrderService orderService;
 
     @Override
-    public void handleCommand(PlaceOrderCommand command) {
+    public void handle(PlaceOrderCommand command) {
         // translate all String representations of product ids to ProductId and place the order
         Map<ProductId, Integer> orderedProducts = new HashMap<>();
         for (Map.Entry<String, Integer> entry : command.orderedProducts().entrySet()) {

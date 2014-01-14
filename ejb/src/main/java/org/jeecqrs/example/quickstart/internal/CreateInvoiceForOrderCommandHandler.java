@@ -18,7 +18,7 @@ public class CreateInvoiceForOrderCommandHandler extends AbstractCommandHandler<
     private OrderRepository orderRepository;
 
     @Override
-    public void handleCommand(CreateInvoiceForOrderCommand command) {
+    public void handle(CreateInvoiceForOrderCommand command) {
         IssueInvoiceService iis = new IssueInvoiceService(orderRepository);
         Invoice invoice = iis.issueInvoiceForOrder(command.orderId());
         invoiceRepository.save(invoice, command.id());

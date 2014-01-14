@@ -10,7 +10,7 @@ public class CreditInvoiceCommandHandler extends AbstractCommandHandler<CreditIn
     private static final Logger log = Logger.getLogger(CreditInvoiceCommandHandler.class.getSimpleName());
 
     @Override
-    public void handleCommand(CreditInvoiceCommand command) {
+    public void handle(CreditInvoiceCommand command) {
         log.info("Credit invoice (not implemented)");
     }
 

@@ -17,7 +17,7 @@ public class NotifyCustomerCommandHandler extends AbstractCommandHandler<NotifyC
     private OrderRepository orderRepository;
 
     @Override
-    public void handleCommand(NotifyCustomerCommand command) {
+    public void handle(NotifyCustomerCommand command) {
         Order order = orderRepository.ofIdentity(command.orderId());
         log.log(Level.INFO, "Sending out notification to customer ''{0}'': {1}",
                 new Object[]{ order.orderer().name(), command.message()});

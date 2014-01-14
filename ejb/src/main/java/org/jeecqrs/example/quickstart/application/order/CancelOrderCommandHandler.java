@@ -14,7 +14,7 @@ public class CancelOrderCommandHandler extends AbstractCommandHandler<CancelOrde
     private OrderRepository orderRepository;
 
     @Override
-    public void handleCommand(CancelOrderCommand command) {
+    public void handle(CancelOrderCommand command) {
         OrderId orderId = OrderId.fromString(command.orderId());
         Order order = orderRepository.ofIdentity(orderId);
         order.cancel(command.reason());
