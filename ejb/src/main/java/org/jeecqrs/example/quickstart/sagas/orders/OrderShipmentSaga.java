@@ -34,17 +34,17 @@ public class OrderShipmentSaga extends AbstractSaga<OrderShipmentSaga> {
 
     protected void when(InvoiceIssued event) {
         this.orderId = event.orderId();
-        checkCompletion();
+        shipOrderOnCompletion();
     }
 
     protected void when(PaymentArrived event) {
         this.payed = true;
-        checkCompletion();
+        shipOrderOnCompletion();
     }
 
-    private void checkCompletion() {
+    private void shipOrderOnCompletion() {
         if (isCompleted())
-            executeCommand(new ShipOrderCommand(orderId));
+            send(new ShipOrderCommand(orderId));
     }
 
     @Override

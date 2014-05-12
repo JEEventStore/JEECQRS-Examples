@@ -11,7 +11,7 @@ public abstract class AbstractMessagingSaga<S extends Saga<Event>, F extends Eve
 
     protected void sendCustomerMessage(OrderId orderId, String msg) {
         NotifyCustomerCommand cmd = new NotifyCustomerCommand(orderId, msg);
-        this.executeCommand(cmd);
+        this.send(cmd);
     }
 
 }

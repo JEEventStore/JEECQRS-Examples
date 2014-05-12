@@ -15,7 +15,7 @@ public class CustomerSimulator extends AbstractSingleEventSaga<CustomerSimulator
             return;
         if (Math.random() < 0.5) {
             log.info("Customer decided to pay the invoice.");
-            this.executeCommand(new PayInvoiceCommand(event.invoiceId().toString()));
+            this.send(new PayInvoiceCommand(event.invoiceId().toString()));
         } else {
                 log.info("Customer decided to ignore the invoice.");
         }

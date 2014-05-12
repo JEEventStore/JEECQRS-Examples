@@ -56,7 +56,7 @@ public class OrderInvoiceTrackingSaga extends AbstractSaga<OrderInvoiceTrackingS
     protected void when(OrderPlaced event) {
         if (!eventSourceReplayActive())
             log.log(Level.INFO, "Received order placed event for order #{0}", event.orderId());
-        this.executeCommand(new CreateInvoiceForOrderCommand(event.orderId()));
+        this.send(new CreateInvoiceForOrderCommand(event.orderId()));
     }
 
     protected void when(OrderCanceled event) {
@@ -86,7 +86,7 @@ public class OrderInvoiceTrackingSaga extends AbstractSaga<OrderInvoiceTrackingS
     private void cancelInvoiceWhenNeeded() {
         if (completed || !canceled || invoiceId == null)
             return;
-        this.executeCommand(new CreditInvoiceCommand(invoiceId));
+        this.send(new CreditInvoiceCommand(invoiceId));
     }
 
     @Override
