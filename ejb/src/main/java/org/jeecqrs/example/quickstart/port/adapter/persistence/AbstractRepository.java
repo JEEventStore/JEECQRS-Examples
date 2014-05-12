@@ -32,6 +32,16 @@ public abstract class AbstractRepository<T extends AbstractEventSourcedAggregate
     }
 
     @Override
+    public void add(T obj, Identity commitId) {
+        super.add(obj, commitId);
+    }
+
+    @Override
+    public void save(T obj, Identity commitId) {
+        super.save(obj, commitId);
+    }
+
+    @Override
     public T ofIdentity(ID id) {
         return super.ofIdentity(id);
     }
