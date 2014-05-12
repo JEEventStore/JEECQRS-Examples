@@ -20,20 +20,41 @@
 
     <dependencies>
         
-        <dependency>
-            <groupId>org.jeecqrs</groupId>
-            <artifactId>jcommondomain-core</artifactId>
-        </dependency>
+        <!-- JEECQRS/JCommonDomain/JEEventStore integration services and library -->
 
         <dependency>
             <groupId>org.jeecqrs</groupId>
-            <artifactId>jeecqrs-jcommondomain-core</artifactId>
+            <artifactId>jeecqrs-jcommondomain-persistence-jeeventstore-ejb</artifactId>
+            <type>ejb</type>
         </dependency>
         
+        <!-- infrastructure services for JEECQRS: persistence with JPA -->
+
         <dependency>
             <groupId>org.jeecqrs</groupId>
-            <artifactId>jeecqrs-jcommondomain-persistence-jeeventstore</artifactId>
+            <artifactId>jeecqrs-infra-jpa-ejb</artifactId>
+            <type>ejb</type>
         </dependency>
+
+        <!-- infrastructure services for JEEventStore: serialization with GSON -->
+
+        <dependency>
+            <groupId>org.jeeventstore</groupId>
+            <artifactId>jeeventstore-serialization-gson-ejb</artifactId>
+            <version>${version.jeeventstore}</version>
+            <type>ejb</type>
+        </dependency>
+
+        <!-- infrastructure services for JEEventStore: persistence with JPA -->
+
+        <dependency>
+            <groupId>org.jeeventstore</groupId>
+            <artifactId>jeeventstore-persistence-jpa-ejb</artifactId>
+            <version>${version.jeeventstore}</version>
+            <type>ejb</type>
+        </dependency>
+
+        <!-- some libraries we use -->
 
         <dependency>
             <groupId>joda-time</groupId>
@@ -45,18 +66,6 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>2.2.4</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.jeeventstore</groupId>
-            <artifactId>jeeventstore-serialization-gson</artifactId>
-            <version>${version.jeeventstore}</version>
         </dependency>
 
         <dependency>
