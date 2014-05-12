@@ -25,6 +25,7 @@
         <dependency>
             <groupId>org.jeecqrs</groupId>
             <artifactId>jeecqrs-jcommondomain-persistence-jeeventstore-ejb</artifactId>
+            <version>${version.jeecqrs.jcommondomain}</version>
             <type>ejb</type>
         </dependency>
         
@@ -33,6 +34,7 @@
         <dependency>
             <groupId>org.jeecqrs</groupId>
             <artifactId>jeecqrs-infra-jpa-ejb</artifactId>
+            <version>${version.jeecqrs}</version>
             <type>ejb</type>
         </dependency>
 

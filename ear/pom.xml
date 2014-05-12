@@ -14,10 +14,6 @@
 
     <name>JEECQRS Quickstart Example: EAR</name>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-
     <build>
         <plugins>
             <plugin>
@@ -58,19 +54,15 @@
         <dependency>
             <groupId>org.jeecqrs</groupId>
             <artifactId>jeecqrs-quickstart-sample-ejb</artifactId>
+            <version>${project.version}</version>
             <type>ejb</type>
         </dependency>
 
         <dependency>
             <groupId>org.jeecqrs</groupId>
             <artifactId>jeecqrs-quickstart-sample-web</artifactId>
+            <version>${project.version}</version>
             <type>war</type>
-        </dependency>
-
-        <dependency>
-            <groupId>org.jeecqrs</groupId>
-            <artifactId>jeecqrs-jcommondomain-persistence-jeeventstore-ejb</artifactId>
-            <type>ejb</type>
         </dependency>
 
     </dependencies>
