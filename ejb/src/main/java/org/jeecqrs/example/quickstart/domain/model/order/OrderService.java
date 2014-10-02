@@ -2,18 +2,20 @@ package org.jeecqrs.example.quickstart.domain.model.order;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import javax.ejb.EJB;
 import org.jeecqrs.example.quickstart.domain.model.product.Product;
 import org.jeecqrs.example.quickstart.domain.model.product.ProductId;
 import org.jeecqrs.example.quickstart.domain.model.product.ProductRepository;
+import org.joda.time.DateTime;
 
 public class OrderService {
 
-    @EJB
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
+
+    public OrderService(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
 
     public Order placeOrder(String orderer, Map<ProductId, Integer> orderedProducts) {
         List<OrderLine> orderLines = new ArrayList<>();
@@ -25,7 +27,7 @@ public class OrderService {
             OrderLine ol = new OrderLine(olid, productId, product.name(), product.price(), entry.getValue());
             orderLines.add(ol);
         }
-        return new Order(new OrderId(), new Date(), orderer, orderLines);
+        return new Order(new OrderId(), DateTime.now(), orderer, orderLines);
     }
     
 }

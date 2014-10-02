@@ -1,7 +1,7 @@
 package org.jeecqrs.example.quickstart.domain.model.billing;
 
-import java.util.Date;
 import org.jeecqrs.common.domain.model.AbstractDomainEvent;
+import org.joda.time.DateTime;
 
 /**
  * A payment for an invoice has arrived.
@@ -10,9 +10,9 @@ public final class PaymentArrived extends AbstractDomainEvent<PaymentArrived> {
 
     private final PaymentId paymentId;
     private final InvoiceId invoiceId;
-    private final Date payedAt;
+    private final DateTime payedAt;
 
-    public PaymentArrived(PaymentId paymentId, InvoiceId invoiceId, Date payedAt) {
+    public PaymentArrived(PaymentId paymentId, InvoiceId invoiceId, DateTime payedAt) {
         this.paymentId = paymentId;
         this.invoiceId = invoiceId;
         this.payedAt = payedAt;
@@ -26,7 +26,7 @@ public final class PaymentArrived extends AbstractDomainEvent<PaymentArrived> {
         return invoiceId;
     }
 
-    public Date payedAt() {
+    public DateTime payedAt() {
         return payedAt;
     }
 

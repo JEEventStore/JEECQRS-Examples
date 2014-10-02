@@ -10,6 +10,7 @@ import org.jeecqrs.example.quickstart.domain.model.order.Order;
 import org.jeecqrs.example.quickstart.domain.model.order.OrderRepository;
 import org.jeecqrs.example.quickstart.domain.model.order.OrderService;
 import org.jeecqrs.example.quickstart.domain.model.product.ProductId;
+import org.jeecqrs.example.quickstart.domain.model.product.ProductRepository;
 
 @Stateless
 public class PlaceOrderCommandHandler extends AbstractCommandHandler<PlaceOrderCommand> {
@@ -17,8 +18,8 @@ public class PlaceOrderCommandHandler extends AbstractCommandHandler<PlaceOrderC
     @EJB
     private OrderRepository orderRepository;
 
-    @Inject
-    private OrderService orderService;
+    @EJB
+    private ProductRepository productRepository;
 
     @Override
     public void handle(PlaceOrderCommand command) {
@@ -28,6 +29,7 @@ public class PlaceOrderCommandHandler extends AbstractCommandHandler<PlaceOrderC
             ProductId productId = ProductId.fromString(entry.getKey());
             orderedProducts.put(productId, entry.getValue());
         }
+        OrderService orderService = new OrderService(productRepository);
         Order order = orderService.placeOrder(command.ordererName(), orderedProducts);
         orderRepository.add(order, command.id());
     }

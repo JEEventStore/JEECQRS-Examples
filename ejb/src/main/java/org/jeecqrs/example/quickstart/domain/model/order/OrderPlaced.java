@@ -1,9 +1,9 @@
 package org.jeecqrs.example.quickstart.domain.model.order;
 
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import org.jeecqrs.common.domain.model.AbstractDomainEvent;
+import org.joda.time.DateTime;
 
 /**
  * A new order has been placed.
@@ -11,11 +11,11 @@ import org.jeecqrs.common.domain.model.AbstractDomainEvent;
 public final class OrderPlaced extends AbstractDomainEvent<OrderPlaced> {
 
     private final OrderId orderId;
-    private final Date orderDate;
+    private final DateTime orderDate;
     private final Orderer orderer;
     private final List<OrderLine> orderLines;
 
-    public OrderPlaced(OrderId orderId, Date orderDate, Orderer orderer, List<OrderLine> orderLines) {
+    public OrderPlaced(OrderId orderId, DateTime orderDate, Orderer orderer, List<OrderLine> orderLines) {
         this.orderId = orderId;
         this.orderDate = orderDate;
         this.orderer = orderer;
@@ -26,7 +26,7 @@ public final class OrderPlaced extends AbstractDomainEvent<OrderPlaced> {
         return orderId;
     }
 
-    public Date orderDate() {
+    public DateTime orderDate() {
         return orderDate;
     }
 

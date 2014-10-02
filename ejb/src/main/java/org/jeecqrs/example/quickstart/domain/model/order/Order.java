@@ -1,23 +1,23 @@
 package org.jeecqrs.example.quickstart.domain.model.order;
 
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.jeecqrs.common.domain.model.AbstractEventSourcedAggregateRoot;
+import org.joda.time.DateTime;
 
 public final class Order extends AbstractEventSourcedAggregateRoot<Order, OrderId> {
 
     private OrderId orderId;
-    private Date orderDate;
+    private DateTime orderDate;
     private Orderer orderer;
     private final Map<OrderLineId, OrderLine> orderLines = new HashMap<>();
 
-    private Date shippedAt = null;
+    private DateTime shippedAt = null;
     private String cancelReason = null;
 
-    protected Order(OrderId orderId, Date orderDate, String orderer, List<OrderLine> orderLines) {
+    protected Order(OrderId orderId, DateTime orderDate, String orderer, List<OrderLine> orderLines) {
         this.apply(new OrderPlaced(orderId, orderDate, new Orderer(orderer), orderLines));
     }
 
@@ -26,7 +26,7 @@ public final class Order extends AbstractEventSourcedAggregateRoot<Order, OrderI
         return this.orderId;
     }
 
-    public Date orderDate() {
+    public DateTime orderDate() {
         return orderDate;
     }
 
@@ -44,14 +44,14 @@ public final class Order extends AbstractEventSourcedAggregateRoot<Order, OrderI
     }
 
     public void ship() {
-        this.apply(new OrderShipped(orderId, new Date()));
+        this.apply(new OrderShipped(orderId, DateTime.now()));
     }
 
     public void cancel(String reason) {
         this.apply(new OrderCanceled(orderId, reason));
     }
 
-    public Date shippedAt() {
+    public DateTime shippedAt() {
         return this.shippedAt;
     }
 

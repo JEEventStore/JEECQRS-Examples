@@ -1,15 +1,15 @@
 package org.jeecqrs.example.quickstart.domain.model.billing;
 
-import java.util.Date;
 import org.jeecqrs.common.domain.model.AbstractEventSourcedAggregateRoot;
+import org.joda.time.DateTime;
 
 public final class Payment extends AbstractEventSourcedAggregateRoot<Payment, PaymentId> {
 
     private PaymentId paymentId;
     private InvoiceId invoiceId;
-    private Date payedAt;
+    private DateTime payedAt;
 
-    public Payment(PaymentId paymentId, InvoiceId invoiceId, Date payedAt) {
+    public Payment(PaymentId paymentId, InvoiceId invoiceId, DateTime payedAt) {
         this.apply(new PaymentArrived(paymentId, invoiceId, payedAt));
     }
 
@@ -22,7 +22,7 @@ public final class Payment extends AbstractEventSourcedAggregateRoot<Payment, Pa
         return invoiceId;
     }
 
-    private Date payedAt() {
+    private DateTime payedAt() {
         return this.payedAt;
     }
 

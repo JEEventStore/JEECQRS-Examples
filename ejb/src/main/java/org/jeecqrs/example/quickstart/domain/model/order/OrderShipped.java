@@ -1,7 +1,7 @@
 package org.jeecqrs.example.quickstart.domain.model.order;
 
-import java.util.Date;
 import org.jeecqrs.common.domain.model.AbstractDomainEvent;
+import org.joda.time.DateTime;
 
 /**
  * A new order has been placed.
@@ -9,9 +9,9 @@ import org.jeecqrs.common.domain.model.AbstractDomainEvent;
 public final class OrderShipped extends AbstractDomainEvent<OrderShipped> {
 
     private final OrderId orderId;
-    private final Date shippingDate;
+    private final DateTime shippingDate;
 
-    public OrderShipped(OrderId orderId, Date shippingDate) {
+    public OrderShipped(OrderId orderId, DateTime shippingDate) {
         this.orderId = orderId;
         this.shippingDate = shippingDate;
     }
@@ -20,7 +20,7 @@ public final class OrderShipped extends AbstractDomainEvent<OrderShipped> {
         return orderId;
     }
 
-    public Date shippingDate() {
+    public DateTime shippingDate() {
         return shippingDate;
     }
     
