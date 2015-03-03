@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.inject.Inject;
 import org.jeecqrs.integration.jcommondomain.commands.AbstractCommandHandler;
 import org.jeecqrs.example.quickstart.domain.model.order.Order;
 import org.jeecqrs.example.quickstart.domain.model.order.OrderRepository;
