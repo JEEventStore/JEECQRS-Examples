@@ -3,15 +3,16 @@ package org.jeecqrs.example.quickstart.application.product;
 import java.util.Collection;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 
 @Stateless
 public class ProductList {
 
-    @EJB
-    private AllProductsProjection allProductsProjection;
+    @Inject
+    private AllProductsDataStore ds;
 
     public Collection<ProductListEntry> allProducts() {
-        return allProductsProjection.getProducts();
+        return ds.getProducts();
     }
     
 }

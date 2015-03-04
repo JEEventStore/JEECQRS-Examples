@@ -2,8 +2,7 @@ package org.jeecqrs.example.quickstart.application.order;
 
 import java.util.HashMap;
 import java.util.Map;
-import javax.ejb.EJB;
-import javax.ejb.Stateless;
+import javax.inject.Inject;
 import org.jeecqrs.integration.jcommondomain.commands.AbstractCommandHandler;
 import org.jeecqrs.example.quickstart.domain.model.order.Order;
 import org.jeecqrs.example.quickstart.domain.model.order.OrderRepository;
@@ -11,13 +10,12 @@ import org.jeecqrs.example.quickstart.domain.model.order.OrderService;
 import org.jeecqrs.example.quickstart.domain.model.product.ProductId;
 import org.jeecqrs.example.quickstart.domain.model.product.ProductRepository;
 
-@Stateless
 public class PlaceOrderCommandHandler extends AbstractCommandHandler<PlaceOrderCommand> {
 
-    @EJB
+    @Inject
     private OrderRepository orderRepository;
 
-    @EJB
+    @Inject
     private ProductRepository productRepository;
 
     @Override

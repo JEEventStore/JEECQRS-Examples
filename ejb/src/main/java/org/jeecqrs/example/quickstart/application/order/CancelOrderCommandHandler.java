@@ -1,16 +1,14 @@
 package org.jeecqrs.example.quickstart.application.order;
 
-import javax.ejb.EJB;
-import javax.ejb.Stateless;
-import org.jeecqrs.integration.jcommondomain.commands.AbstractCommandHandler;
+import javax.inject.Inject;
 import org.jeecqrs.example.quickstart.domain.model.order.Order;
 import org.jeecqrs.example.quickstart.domain.model.order.OrderId;
 import org.jeecqrs.example.quickstart.domain.model.order.OrderRepository;
+import org.jeecqrs.integration.jcommondomain.commands.AbstractCommandHandler;
 
-@Stateless
 public class CancelOrderCommandHandler extends AbstractCommandHandler<CancelOrderCommand> {
 
-    @EJB
+    @Inject
     private OrderRepository orderRepository;
 
     @Override

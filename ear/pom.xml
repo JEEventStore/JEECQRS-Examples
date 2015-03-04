@@ -19,15 +19,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-ear-plugin</artifactId>
-                <version>2.9</version>
+                <version>2.9.1</version>
                 <configuration>
-                    <version>6</version>
+                    <version>7</version>
                     <defaultLibBundleDir>lib</defaultLibBundleDir>
-                    <archive>
-                        <manifest>
-                            <addClasspath>true</addClasspath>
-                        </manifest>
-                    </archive>
                     <modules>
                         <webModule>
                             <groupId>org.jeecqrs</groupId>
@@ -42,6 +37,13 @@
             <plugin>
                 <groupId>org.jboss.as.plugins</groupId>
                 <artifactId>jboss-as-maven-plugin</artifactId>
+                <configuration>
+                    <skip>false</skip>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
                 <configuration>
                     <skip>false</skip>
                 </configuration>

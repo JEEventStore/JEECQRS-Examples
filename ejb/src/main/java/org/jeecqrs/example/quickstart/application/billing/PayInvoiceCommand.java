@@ -1,9 +1,8 @@
 package org.jeecqrs.example.quickstart.application.billing;
 
 import org.jeecqrs.common.commands.AbstractCommand;
-import org.jeecqrs.example.quickstart.application.order.CancelOrderCommand;
 
-public final class PayInvoiceCommand extends AbstractCommand<CancelOrderCommand> {
+public final class PayInvoiceCommand extends AbstractCommand<PayInvoiceCommand> {
 
     private final String invoiceId;
 

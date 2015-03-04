@@ -1,20 +1,18 @@
 package org.jeecqrs.example.quickstart.internal;
 
-import javax.ejb.EJB;
-import javax.ejb.Stateless;
+import javax.inject.Inject;
 import org.jeecqrs.integration.jcommondomain.commands.AbstractCommandHandler;
 import org.jeecqrs.example.quickstart.domain.model.billing.Invoice;
 import org.jeecqrs.example.quickstart.domain.model.billing.InvoiceRepository;
 import org.jeecqrs.example.quickstart.domain.model.billing.IssueInvoiceService;
 import org.jeecqrs.example.quickstart.domain.model.order.OrderRepository;
 
-@Stateless
 public class CreateInvoiceForOrderCommandHandler extends AbstractCommandHandler<CreateInvoiceForOrderCommand> {
 
-    @EJB
+    @Inject
     private InvoiceRepository invoiceRepository;
 
-    @EJB
+    @Inject
     private OrderRepository orderRepository;
 
     @Override
