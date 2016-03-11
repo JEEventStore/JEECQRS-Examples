@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.jeecqrs</groupId>
+        <artifactId>jeecqrs-openejb-sample-parent</artifactId>
+        <version>1.1-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>jeecqrs-openejb-sample-ejb</artifactId>
+    <packaging>ejb</packaging>
+
+    <name>JEECQRS OpenEJB Example: EJB</name>
+
+    <dependencies>
+        
+        <!-- JEECQRS/JCommonDomain/JEEventStore integration services and library -->
+
+        <dependency>
+            <groupId>org.jeecqrs</groupId>
+            <artifactId>jeecqrs-jcommondomain-persistence-jeeventstore-ejb</artifactId>
+            <version>${version.jeecqrs.jcommondomain}</version>
+            <type>ejb</type>
+        </dependency>
+        
+        <!-- infrastructure services for JEECQRS: persistence with JPA -->
+
+        <dependency>
+            <groupId>org.jeecqrs</groupId>
+            <artifactId>jeecqrs-infra-jpa-ejb</artifactId>
+            <version>${version.jeecqrs}</version>
+            <type>ejb</type>
+        </dependency>
+
+        <!-- infrastructure services for JEEventStore: serialization with GSON -->
+
+        <dependency>
+            <groupId>org.jeeventstore</groupId>
+            <artifactId>jeeventstore-serialization-gson-ejb</artifactId>
+            <version>${version.jeeventstore}</version>
+            <type>ejb</type>
+        </dependency>
+
+        <!-- infrastructure services for JEEventStore: persistence with JPA -->
+
+        <dependency>
+            <groupId>org.jeeventstore</groupId>
+            <artifactId>jeeventstore-persistence-jpa-ejb</artifactId>
+            <version>${version.jeeventstore}</version>
+            <type>ejb</type>
+        </dependency>
+
+        <!-- some libraries we use -->
+
+        <!-- OpenEJB standalone 4.7.4 ships with joda-time 1.6.2 -->
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>1.6.2</version>
+            <scope>provided</scope>
+        </dependency>
+            
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>6.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-ejb-plugin</artifactId>
+                <version>2.5.1</version>
+                <configuration>
+                    <ejbVersion>3.1</ejbVersion>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.5.1</version>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
