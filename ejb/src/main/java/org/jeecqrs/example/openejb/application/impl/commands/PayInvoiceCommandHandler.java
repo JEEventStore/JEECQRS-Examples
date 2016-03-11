@@ -16,7 +16,7 @@ public class PayInvoiceCommandHandler extends AbstractCommandHandler<PayInvoiceC
 
     @Override
     public void handle(PayInvoiceCommand command) {
-        InvoiceId invoiceId = InvoiceId.fromString(command.invoiceId());
+        InvoiceId invoiceId = command.invoiceId();
         Payment payment = new Payment(new PaymentId(), invoiceId, new DateTime());
         paymentRepository.add(payment, command.id());
     }

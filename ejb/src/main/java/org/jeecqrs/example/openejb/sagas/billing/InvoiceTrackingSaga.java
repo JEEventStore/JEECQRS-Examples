@@ -70,8 +70,7 @@ public class InvoiceTrackingSaga extends AbstractSaga<InvoiceTrackingSaga> {
             if (!eventSourceReplayActive())
                 log.log(Level.INFO, "Customer did not pay, cancel order {0}",
                         new Object[]{ orderId });
-            send(new CancelOrderCommand(orderId.toString(),
-                    "Customer did not pay within time"));
+            send(new CancelOrderCommand(orderId, "Customer did not pay within time"));
         } 
     }
 

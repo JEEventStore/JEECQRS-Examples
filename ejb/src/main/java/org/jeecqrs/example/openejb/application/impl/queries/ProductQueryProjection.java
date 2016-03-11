@@ -6,10 +6,10 @@ import org.jeecqrs.common.event.Event;
 import org.jeecqrs.example.openejb.domain.model.product.ProductListed;
 import org.jeecqrs.integration.jcommondomain.projections.AbstractProjection;
 
-public class AllProductsProjection extends AbstractProjection {
+public class ProductQueryProjection extends AbstractProjection {
 
     @Inject
-    private AllProductsDataStore ds;
+    private ProductQueryDataStore ds;
 
     @Override
     protected Class<? extends Event>[] listenToEvents() {

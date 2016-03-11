@@ -1,18 +1,19 @@
 package org.jeecqrs.example.openejb.application.api.commands;
 
 import org.jeecqrs.common.commands.AbstractCommand;
+import org.jeecqrs.example.openejb.domain.model.order.OrderId;
 
 public final class CancelOrderCommand extends AbstractCommand<CancelOrderCommand> {
 
-    private final String orderId;
+    private final OrderId orderId;
     private final String reason;
 
-    public CancelOrderCommand(String orderId, String reason) {
+    public CancelOrderCommand(OrderId orderId, String reason) {
         this.orderId = orderId;
         this.reason = reason;
     }
 
-    public String orderId() {
+    public OrderId orderId() {
         return this.orderId;
     }
 

@@ -13,7 +13,7 @@ import org.jeecqrs.example.openejb.application.api.queries.ProductBean;
  * A simple in-memory data store for products.
  */
 @Singleton
-public class AllProductsDataStore {
+public class ProductQueryDataStore {
     
     private final Map<String, ProductBean> entries = new HashMap<>();
 

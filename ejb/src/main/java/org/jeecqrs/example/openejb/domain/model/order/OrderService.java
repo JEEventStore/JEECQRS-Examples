@@ -16,7 +16,7 @@ public class OrderService {
         this.productRepository = productRepository;
     }
 
-    public Order placeOrder(String orderer, Map<ProductId, Integer> orderedProducts) {
+    public Order placeOrder(OrderId orderId, String orderer, Map<ProductId, Integer> orderedProducts) {
         List<OrderLine> orderLines = new ArrayList<>();
         for (Map.Entry<ProductId, Integer> entry : orderedProducts.entrySet()) {
             ProductId productId = entry.getKey();
@@ -25,7 +25,7 @@ public class OrderService {
             OrderLine ol = new OrderLine(olid, productId, product.name(), product.price(), entry.getValue());
             orderLines.add(ol);
         }
-        return new Order(new OrderId(), new DateTime(), orderer, orderLines);
+        return new Order(orderId, new DateTime(), orderer, orderLines);
     }
     
 }

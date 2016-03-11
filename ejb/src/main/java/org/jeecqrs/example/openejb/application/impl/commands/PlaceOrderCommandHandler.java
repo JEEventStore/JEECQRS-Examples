@@ -28,7 +28,7 @@ public class PlaceOrderCommandHandler extends AbstractCommandHandler<PlaceOrderC
             orderedProducts.put(productId, entry.getValue());
         }
         OrderService orderService = new OrderService(productRepository);
-        Order order = orderService.placeOrder(command.ordererName(), orderedProducts);
+        Order order = orderService.placeOrder(command.orderId(), command.ordererName(), orderedProducts);
         orderRepository.add(order, command.id());
     }
 
