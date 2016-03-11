@@ -1,0 +1,11 @@
+*.class
+
+# Package Files #
+*.jar
+*.ear
+
+nb-configuration.xml
+ejb/target
+ear/target
+rest/target
+logs/
