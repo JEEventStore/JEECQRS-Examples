@@ -6,9 +6,10 @@
 *.ear
 
 nb-configuration.xml
-*/ejb/target
-*/ear/target
-*/web/target
+**/ejb/target
+**/ear/target
+**/web/target
+**/rest/target
 
 *.ear
 
