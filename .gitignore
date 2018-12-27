@@ -10,3 +10,10 @@ nb-configuration.xml
 */ear/target
 */web/target
 
+*.ear
+
+nb-configuration.xml
+ejb/target
+ear/target
+rest/target
+logs/
