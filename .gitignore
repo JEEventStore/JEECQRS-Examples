@@ -17,3 +17,6 @@ ejb/target
 ear/target
 rest/target
 logs/
+
+.idea/
+*.iml
