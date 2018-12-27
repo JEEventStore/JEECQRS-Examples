@@ -1,14 +1,15 @@
 package org.jeecqrs.example.openejb.sagas.billing;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.jeecqrs.integration.jcommondomain.sagas.AbstractSaga;
-import org.jeecqrs.integration.jcommondomain.sagas.SagaIdentifier;
 import org.jeecqrs.example.openejb.application.api.commands.CancelOrderCommand;
 import org.jeecqrs.example.openejb.domain.model.billing.InvoiceId;
 import org.jeecqrs.example.openejb.domain.model.billing.InvoiceIssued;
 import org.jeecqrs.example.openejb.domain.model.billing.PaymentArrived;
 import org.jeecqrs.example.openejb.domain.model.order.OrderId;
+import org.jeecqrs.integration.jcommondomain.sagas.AbstractSaga;
+import org.jeecqrs.integration.jcommondomain.sagas.SagaIdentifier;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Tracks invoices and cancels any orders that have not been payed
@@ -24,24 +25,9 @@ public class InvoiceTrackingSaga extends AbstractSaga<InvoiceTrackingSaga> {
 
     @Override
     protected void setupSaga() {
-        listenTo(new SagaIdentifier<InvoiceIssued>() {
-            @Override
-            public String sagaIdFor(InvoiceIssued event) {
-                return event.invoiceId().toString();
-            }
-        });
-        listenTo(new SagaIdentifier<PaymentArrived>() {
-            @Override
-            public String sagaIdFor(PaymentArrived event) {
-                return event.invoiceId().toString();
-            }
-        });
-        listenTo(new SagaIdentifier<PaymentTimedOut>() {
-            @Override
-            public String sagaIdFor(PaymentTimedOut event) {
-                return event.invoiceId().toString();
-            }
-        });
+        listenTo((SagaIdentifier<InvoiceIssued>) event -> event.invoiceId().toString());
+        listenTo((SagaIdentifier<PaymentArrived>) event -> event.invoiceId().toString());
+        listenTo((SagaIdentifier<PaymentTimedOut>) event -> event.invoiceId().toString());
     }
 
     protected void when(InvoiceIssued event) {

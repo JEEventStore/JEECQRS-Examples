@@ -1,16 +1,17 @@
 package org.jeecqrs.example.openejb.sagas.orders;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.jeecqrs.integration.jcommondomain.sagas.AbstractSaga;
-import org.jeecqrs.integration.jcommondomain.sagas.SagaIdentifier;
-import org.jeecqrs.example.openejb.internal.CreateInvoiceForOrderCommand;
-import org.jeecqrs.example.openejb.internal.CreditInvoiceCommand;
 import org.jeecqrs.example.openejb.domain.model.billing.InvoiceId;
 import org.jeecqrs.example.openejb.domain.model.billing.InvoiceIssued;
 import org.jeecqrs.example.openejb.domain.model.order.OrderCanceled;
 import org.jeecqrs.example.openejb.domain.model.order.OrderPlaced;
 import org.jeecqrs.example.openejb.domain.model.order.OrderShipped;
+import org.jeecqrs.example.openejb.internal.CreateInvoiceForOrderCommand;
+import org.jeecqrs.example.openejb.internal.CreditInvoiceCommand;
+import org.jeecqrs.integration.jcommondomain.sagas.AbstractSaga;
+import org.jeecqrs.integration.jcommondomain.sagas.SagaIdentifier;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Tracks invoices for orders.
@@ -27,30 +28,10 @@ public class OrderInvoiceTrackingSaga extends AbstractSaga<OrderInvoiceTrackingS
 
     @Override
     protected void setupSaga() {
-        listenTo(new SagaIdentifier<OrderPlaced>() {
-            @Override
-            public String sagaIdFor(OrderPlaced event) {
-                return event.orderId().toString();
-            }
-        });
-        listenTo(new SagaIdentifier<OrderCanceled>() {
-            @Override
-            public String sagaIdFor(OrderCanceled event) {
-                return event.orderId().toString();
-            }
-        });
-        listenTo(new SagaIdentifier<OrderShipped>() {
-            @Override
-            public String sagaIdFor(OrderShipped event) {
-                return event.orderId().toString();
-            }
-        });
-        listenTo(new SagaIdentifier<InvoiceIssued>() {
-            @Override
-            public String sagaIdFor(InvoiceIssued event) {
-                return event.orderId().toString();
-            }
-        });
+        listenTo((SagaIdentifier<OrderPlaced>) event -> event.orderId().toString());
+        listenTo((SagaIdentifier<OrderCanceled>) event -> event.orderId().toString());
+        listenTo((SagaIdentifier<OrderShipped>) event -> event.orderId().toString());
+        listenTo((SagaIdentifier<InvoiceIssued>) event -> event.orderId().toString());
     }
 
     protected void when(OrderPlaced event) {

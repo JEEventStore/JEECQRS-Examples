@@ -1,19 +1,11 @@
 package org.jeecqrs.example.openejb.sagas.orders;
 
-import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
-import javax.enterprise.context.spi.CreationalContext;
-import javax.enterprise.inject.spi.AnnotatedType;
-import javax.enterprise.inject.spi.InjectionTarget;
-import javax.inject.Inject;
-import org.jeecqrs.common.sagas.SagaCommandBus;
-import org.jeecqrs.common.sagas.SagaTimeoutProvider;
-import org.jeecqrs.integration.jcommondomain.sagas.AbstractSaga;
-import org.jeecqrs.integration.jcommondomain.sagas.SagaIdentifier;
-import org.jeecqrs.example.openejb.internal.ShipOrderCommand;
 import org.jeecqrs.example.openejb.domain.model.billing.InvoiceIssued;
 import org.jeecqrs.example.openejb.domain.model.billing.PaymentArrived;
 import org.jeecqrs.example.openejb.domain.model.order.OrderId;
+import org.jeecqrs.example.openejb.internal.ShipOrderCommand;
+import org.jeecqrs.integration.jcommondomain.sagas.AbstractSaga;
+import org.jeecqrs.integration.jcommondomain.sagas.SagaIdentifier;
 
 /**
  * Ship an order when an invoice for the order has been created
@@ -26,18 +18,8 @@ public class OrderShipmentSaga extends AbstractSaga<OrderShipmentSaga> {
 
     @Override
     protected void setupSaga() {
-        listenTo(new SagaIdentifier<InvoiceIssued>() {
-            @Override
-            public String sagaIdFor(InvoiceIssued event) {
-                return event.invoiceId().toString();
-            }
-        });
-        listenTo(new SagaIdentifier<PaymentArrived>() {
-            @Override
-            public String sagaIdFor(PaymentArrived event) {
-                return event.invoiceId().toString();
-            }
-        });
+        listenTo((SagaIdentifier<InvoiceIssued>) event -> event.invoiceId().toString());
+        listenTo((SagaIdentifier<PaymentArrived>) event -> event.invoiceId().toString());
     }
 
     protected void when(InvoiceIssued event) {
