@@ -18,18 +18,8 @@ public class OrderShipmentSaga extends AbstractSaga<OrderShipmentSaga> {
 
     @Override
     protected void setupSaga() {
-        listenTo(new SagaIdentifier<InvoiceIssued>() {
-            @Override
-            public String sagaIdFor(InvoiceIssued event) {
-                return event.invoiceId().toString();
-            }
-        });
-        listenTo(new SagaIdentifier<PaymentArrived>() {
-            @Override
-            public String sagaIdFor(PaymentArrived event) {
-                return event.invoiceId().toString();
-            }
-        });
+        listenTo((SagaIdentifier<InvoiceIssued>) event -> event.invoiceId().toString());
+        listenTo((SagaIdentifier<PaymentArrived>) event -> event.invoiceId().toString());
     }
 
     protected void when(InvoiceIssued event) {

@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.jeecqrs</groupId>
         <artifactId>jeecqrs-quickstart-sample-parent</artifactId>
-        <version>1.1-SNAPSHOT</version>
+        <version>1.4</version>
     </parent>
 
     <artifactId>jeecqrs-quickstart-sample-ejb</artifactId>
@@ -25,7 +25,6 @@
         <dependency>
             <groupId>org.jeecqrs</groupId>
             <artifactId>jeecqrs-jcommondomain-persistence-jeeventstore-ejb</artifactId>
-            <version>${version.jeecqrs.jcommondomain}</version>
             <type>ejb</type>
         </dependency>
         
@@ -34,7 +33,6 @@
         <dependency>
             <groupId>org.jeecqrs</groupId>
             <artifactId>jeecqrs-infra-jpa-ejb</artifactId>
-            <version>${version.jeecqrs}</version>
             <type>ejb</type>
         </dependency>
 
@@ -43,7 +41,6 @@
         <dependency>
             <groupId>org.jeeventstore</groupId>
             <artifactId>jeeventstore-serialization-gson-ejb</artifactId>
-            <version>${version.jeeventstore}</version>
             <type>ejb</type>
         </dependency>
 
@@ -52,7 +49,6 @@
         <dependency>
             <groupId>org.jeeventstore</groupId>
             <artifactId>jeeventstore-persistence-jpa-ejb</artifactId>
-            <version>${version.jeeventstore}</version>
             <type>ejb</type>
         </dependency>
 

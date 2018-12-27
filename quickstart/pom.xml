@@ -3,10 +3,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    
+
     <groupId>org.jeecqrs</groupId>
     <artifactId>jeecqrs-quickstart-sample-parent</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.4</version>
     <packaging>pom</packaging>
 
     <name>JEECQRS Quickstart Example: Parent</name>
@@ -19,12 +19,22 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <version.jeecqrs>1.1-SNAPSHOT</version.jeecqrs>
-        <version.jeecqrs.jcommondomain>1.1-SNAPSHOT</version.jeecqrs.jcommondomain>
-        <version.jeeventstore>1.1-SNAPSHOT</version.jeeventstore>
+        <version.jeecqrs.jcommondomain>1.4.1</version.jeecqrs.jcommondomain>
         <version.jboss.as.maven.plugin>7.5.Final</version.jboss.as.maven.plugin>
-        <version.wildfly.maven.plugin>1.0.2.Final</version.wildfly.maven.plugin>
+        <version.wildfly.maven.plugin>2.0.0.Final</version.wildfly.maven.plugin>
     </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.jeecqrs</groupId>
+                <artifactId>jeecqrs-jcommondomain-bom-all</artifactId>
+                <version>${version.jeecqrs.jcommondomain}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <pluginManagement>
@@ -86,8 +96,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.3.2</version>
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
         </plugins>
