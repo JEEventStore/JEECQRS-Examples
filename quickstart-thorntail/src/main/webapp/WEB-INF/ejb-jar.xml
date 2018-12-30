@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ejb-jar xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:ejb="http://java.sun.com/xml/ns/javaee/ejb-jar_3_1.xsd"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/ejb-jar_3_1.xsd"
+         version="3.1">
+
+    <enterprise-beans>
+
+        <!-- JEEventStore services -->
+
+        <session>
+            <ejb-name>EventStoreCommitNotifier</ejb-name>
+            <business-local>org.jeeventstore.EventStoreCommitNotifier</business-local>
+            <ejb-class>org.jeeventstore.notifier.AsyncEventStoreCommitNotifier</ejb-class>
+            <session-type>Singleton</session-type>
+            <init-on-startup>true</init-on-startup>
+        </session>
+
+        <session>
+            <ejb-name>EventStore</ejb-name>
+            <business-local>org.jeeventstore.EventStore</business-local>
+            <ejb-class>org.jeeventstore.store.OptimisticEventStoreService</ejb-class>
+            <session-type>Stateless</session-type>
+            <ejb-local-ref>
+                <ejb-ref-name>persistence</ejb-ref-name>
+                <ejb-ref-type>Session</ejb-ref-type>
+                <local>org.jeeventstore.EventStorePersistence</local>
+            </ejb-local-ref>
+            <ejb-local-ref>
+                <ejb-ref-name>commitNotifier</ejb-ref-name>
+                <local>org.jeeventstore.EventStoreCommitNotifier</local>
+                <ejb-link>EventStoreCommitNotifier</ejb-link>
+            </ejb-local-ref>
+        </session>
+
+        <!-- JEEventStore persistence provider (JPA) -->
+
+        <session>
+            <ejb-name>JEEventStorePersistence</ejb-name>
+            <business-local>org.jeeventstore.EventStorePersistence</business-local>
+            <ejb-class>org.jeeventstore.persistence.jpa.EventStorePersistenceJPA</ejb-class>
+            <session-type>Stateless</session-type>
+            <ejb-local-ref>
+                <ejb-ref-name>serializer</ejb-ref-name>
+                <ejb-ref-type>Session</ejb-ref-type>
+                <local>org.jeeventstore.EventSerializer</local>
+            </ejb-local-ref>
+
+            <ejb-local-ref>
+                <ejb-ref-name>eventStorePersistenceContextProvider</ejb-ref-name>
+                <ejb-ref-type>Session</ejb-ref-type>
+                <local>org.jeeventstore.persistence.jpa.PersistenceContextProvider</local>
+                <injection-target>
+                    <injection-target-class>org.jeeventstore.persistence.jpa.EventStorePersistenceJPA
+                    </injection-target-class>
+                    <injection-target-name>persistenceContextProvider</injection-target-name>
+                </injection-target>
+            </ejb-local-ref>
+
+        </session>
+
+        <!-- JEEventStore serialization provider (GSON) -->
+
+        <session>
+            <ejb-name>JEEventStoreEventSerializer</ejb-name>
+            <business-local>org.jeeventstore.EventSerializer</business-local>
+            <ejb-class>org.jeeventstore.serialization.gson.EventSerializerGson</ejb-class>
+            <session-type>Singleton</session-type>
+            <init-on-startup>true</init-on-startup>
+        </session>
+
+        <!-- JEECQRS Command bus, used as command bus implementation -->
+
+        <session>
+            <ejb-name>JEECQRSCommandBus</ejb-name>
+            <business-local>org.jeecqrs.command.CommandBus</business-local>
+            <ejb-class>org.jeecqrs.command.bus.simple.SimpleAsyncCommandBus</ejb-class>
+            <session-type>Stateless</session-type>
+        </session>
+
+        <session>
+            <ejb-name>JEECQRSReliableCommandBus</ejb-name>
+            <business-local>org.jeecqrs.command.ReliableCommandBus</business-local>
+            <ejb-class>org.jeecqrs.command.bus.simple.SimpleSyncCommandBus</ejb-class>
+            <session-type>Stateless</session-type>
+        </session>
+
+        <session>
+            <ejb-name>CommandHandlerRegistry</ejb-name>
+            <business-local>org.jeecqrs.command.CommandHandlerRegistry</business-local>
+            <ejb-class>org.jeecqrs.command.registry.autodiscover.AutoDiscoverCommandHandlerRegistry</ejb-class>
+            <session-type>Singleton</session-type>
+            <init-on-startup>true</init-on-startup>
+        </session>
+
+        <!-- JEECQRS EventBus, used as event bus implementation -->
+
+        <session>
+            <ejb-name>EventBusListenerRegistry</ejb-name>
+            <business-local>org.jeecqrs.event.EventBusListenerRegistry</business-local>
+            <ejb-class>org.jeecqrs.event.registry.autodiscover.AutoDiscoverEventBusListenerRegistry</ejb-class>
+            <session-type>Singleton</session-type>
+            <init-on-startup>true</init-on-startup>
+        </session>
+
+        <session>
+            <ejb-name>MultiTopicPublisher</ejb-name>
+            <business-local>org.jeecqrs.messaging.MultiTopicPublisher</business-local>
+            <ejb-class>org.jeecqrs.messaging.local.LocalMultiTopicPublisher</ejb-class>
+            <session-type>Singleton</session-type>
+            <init-on-startup>true</init-on-startup>
+        </session>
+
+        <session>
+            <ejb-name>JEECQRSEventBus</ejb-name>
+            <business-local>org.jeecqrs.event.EventBus</business-local>
+            <ejb-class>org.jeecqrs.event.bus.local.LocalEventBus</ejb-class>
+            <session-type>Singleton</session-type>
+            <init-on-startup>true</init-on-startup>
+        </session>
+
+        <!-- JCommonDomain CommandBus, delegates to JEECQRS' CommandBus -->
+
+        <session>
+            <ejb-name>CommandBus</ejb-name>
+            <business-local>org.jeecqrs.common.commands.CommandBus</business-local>
+            <ejb-class>org.jeecqrs.integration.jcommondomain.commands.CommandBusService</ejb-class>
+            <session-type>Stateless</session-type>
+        </session>
+
+        <session>
+            <ejb-name>SagaCommandBus</ejb-name>
+            <business-local>org.jeecqrs.common.sagas.SagaCommandBus</business-local>
+            <ejb-class>org.jeecqrs.integration.jcommondomain.sagas.SagaCommandBusService</ejb-class>
+            <session-type>Stateless</session-type>
+        </session>
+
+        <!-- JCommonDomain EventBus, delegates to JEECQRS' EventBus -->
+
+        <session>
+            <ejb-name>JCommonDomainEventBus</ejb-name>
+            <business-local>org.jeecqrs.common.event.EventBus</business-local>
+            <ejb-class>org.jeecqrs.integration.jcommondomain.event.EventBusService</ejb-class>
+            <session-type>Stateless</session-type>
+        </session>
+
+        <!-- JEECQRS Saga infrastructure services -->
+
+        <session>
+            <ejb-name>SagaRepository</ejb-name>
+            <business-local>org.jeecqrs.sagas.SagaRepository</business-local>
+            <ejb-class>org.jeecqrs.integration.jcommondomain.jeeventstore.SagaRepositoryService</ejb-class>
+            <session-type>Stateless</session-type>
+        </session>
+
+        <session>
+            <ejb-name>SagaRegistry</ejb-name>
+            <business-local>org.jeecqrs.sagas.SagaRegistry</business-local>
+            <ejb-class>org.jeecqrs.sagas.registry.autodiscover.AutoDiscoverSagaRegistry</ejb-class>
+            <session-type>Singleton</session-type>
+            <init-on-startup>true</init-on-startup>
+        </session>
+
+        <session>
+            <ejb-name>SagaConfigResolver</ejb-name>
+            <business-local>org.jeecqrs.sagas.SagaConfigResolver</business-local>
+            <ejb-class>org.jeecqrs.sagas.config.autodiscover.AutoDiscoverSagaConfigResolver</ejb-class>
+            <session-type>Singleton</session-type>
+            <init-on-startup>true</init-on-startup>
+        </session>
+
+        <session>
+            <ejb-name>SagaService</ejb-name>
+            <business-local>org.jeecqrs.sagas.handler.SagaService</business-local>
+            <ejb-class>org.jeecqrs.sagas.handler.SagaServiceBean</ejb-class>
+            <session-type>Stateless</session-type>
+        </session>
+
+        <session>
+            <ejb-name>RegisterSagaHandlersEventBusListenerRegistry</ejb-name>
+            <business-local>org.jeecqrs.event.EventBusListenerRegistry</business-local>
+            <ejb-class>org.jeecqrs.sagas.handler.local.RegisterSagaHandlersEventBusListenerRegistry</ejb-class>
+            <session-type>Singleton</session-type>
+            <init-on-startup>true</init-on-startup>
+        </session>
+
+        <!-- JEECQRS Saga Tracker event serializer, delegates to JEEventStore's EventSerializer -->
+
+        <session>
+            <ejb-name>SagaEventSerializer</ejb-name>
+            <business-local>org.jeecqrs.sagas.tracker.SagaTrackerEventSerializer</business-local>
+            <ejb-class>
+                org.jeecqrs.integration.jcommondomain.jeeventstore.JEEventStoreDelegatingSagaTrackerEventSerializer
+            </ejb-class>
+            <session-type>Stateless</session-type>
+        </session>
+
+        <!-- JEECQRS SagaTracker persistent event bus implementation.
+            Provides a persistent event bus by persisting to JEEventStore,
+            where the events are automatically dispatched by the append listener -->
+
+        <session>
+            <ejb-name>SagaTrackerEventBus</ejb-name>
+            <business-local>org.jeecqrs.sagas.tracker.SagaTrackerEventBus</business-local>
+            <ejb-class>org.jeecqrs.integration.jcommondomain.jeeventstore.SagaTrackerPersistingEventBusService
+            </ejb-class>
+            <session-type>Stateless</session-type>
+        </session>
+
+        <!-- JCommonDomain SagaTimeoutProvider, delegates to JEECQRS' SagaTracker -->
+
+        <session>
+            <ejb-name>SagaTimeoutProvider</ejb-name>
+            <business-local>org.jeecqrs.common.sagas.SagaTimeoutProvider</business-local>
+            <ejb-class>org.jeecqrs.integration.jcommondomain.sagas.SagaTimeoutProviderService</ejb-class>
+            <session-type>Stateless</session-type>
+        </session>
+
+        <!-- Bridge between JEEventStore and EventBus:  registers as event listener
+             at the event store and dispatches events to the event bus -->
+
+        <session>
+            <ejb-name>EventDispatcher</ejb-name>
+            <local-bean/>
+            <ejb-class>org.jeecqrs.integration.jcommondomain.jeeventstore.EventDispatcher</ejb-class>
+            <session-type>Singleton</session-type>
+        </session>
+
+        <!-- Bridge between JEEventStore and EventBus: replays events from the event store -->
+
+        <session>
+            <ejb-name>EventReplayer</ejb-name>
+            <local-bean/>
+            <ejb-class>org.jeecqrs.integration.jcommondomain.jeeventstore.EventReplayer</ejb-class>
+            <session-type>Stateless</session-type>
+        </session>
+
+        <!-- Application Setup -->
+
+        <session>
+            <ejb-name>ApplicationStartup</ejb-name>
+            <local-bean/>
+            <ejb-class>org.jeecqrs.integration.jcommondomain.jeeventstore.ApplicationStartup</ejb-class>
+            <session-type>Singleton</session-type>
+            <init-on-startup>true</init-on-startup>
+            <transaction-type>Bean</transaction-type>
+        </session>
+
+        <!-- JEECQRS infra (SagaTracker) -->
+
+        <session>
+            <ejb-name>JEECQRSSagaTracker</ejb-name>
+            <business-local>org.jeecqrs.sagas.SagaTracker</business-local>
+            <ejb-class>org.jeecqrs.sagas.tracker.jpa.JPASagaTracker</ejb-class>
+            <session-type>Singleton</session-type>
+        </session>
+
+    </enterprise-beans>
+
+</ejb-jar>
+
